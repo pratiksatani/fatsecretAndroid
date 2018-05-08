@@ -223,6 +223,16 @@ public class RequestBuilder {
         return APP_URL + "?" + paramify(params.toArray(template));
     }
 
+    public String buildFoodSearchbarcodeGetUrl(String Barcode) throws Exception {
+        List<String> params = new ArrayList<String>(Arrays.asList(generateOauthParams()));
+        String[] template = new String[1];
+        params.add("method=food.find_id_for_barcode");
+        params.add("barcode=" + Barcode);
+        params.add("oauth_signature=" + sign(HTTP_METHOD, APP_URL, params.toArray(template)));
+
+        return APP_URL + "?" + paramify(params.toArray(template));
+    }
+
     /**
      * Returns the rest url which will be sent to fatsecret platform server for searching recipes
      *
