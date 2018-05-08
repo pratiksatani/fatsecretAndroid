@@ -263,12 +263,13 @@ public class RequestBuilder {
     /*
     * Returns the rest url which will be sent to fatsecret platform server for creating new profile
     * */
-    public String crateProfile()
+    public String crateProfile(String userId)
     {
        // this.createProfileCallback=callback;
         List<String> params = new ArrayList<String>(Arrays.asList(generateOauthParams()));
         String[] template = new String[1];
         params.add("method=profile.create");
+        params.add("user_id="+userId);
         try {
             params.add("oauth_signature=" + sign(HTTP_METHOD, APP_URL, params.toArray(template)));
         } catch (UnsupportedEncodingException e) {
