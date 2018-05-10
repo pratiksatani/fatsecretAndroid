@@ -223,6 +223,45 @@ public class RequestBuilder {
         return APP_URL + "?" + paramify(params.toArray(template));
     }
 
+
+    /**
+     * Returns the rest url which will be sent to fatsecret platform server for searching unique food item
+     *
+     * @param userID			The user_id specified in profile.create.
+     * @return				rest url which will be sent to fatsecret platform server for getting oauth_token and oauth_secret of user
+     * @throws Exception	if sign throws exception
+     */
+    public String buildGetUserAuthUrl(String userID) throws Exception {
+        List<String> params = new ArrayList<String>(Arrays.asList(generateOauthParams()));
+        String[] template = new String[1];
+        params.add("method=profile.get_auth");
+        params.add("user_id=" + userID);
+        params.add("oauth_signature=" + sign(HTTP_METHOD, APP_URL, params.toArray(template)));
+
+        return APP_URL + "?" + paramify(params.toArray(template));
+    }
+
+    /**
+     * Returns the rest url which will be sent to fatsecret platform server for searching unique food item
+     *
+     * @param OauthToken			The key of the profile to use
+     * @return				rest url which will be sent to fatsecret platform server for getting the food elements returned are those that were recently eaten by the user.
+     * @throws Exception	if sign throws exception
+     */
+    public String buildGetRecentlyEatenFoodUrl(String OauthToken) throws Exception {
+        List<String> params = new ArrayList<String>(Arrays.asList(generateOauthParams()));
+        String[] template = new String[1];
+        params.add("method=foods.get_recently_eaten");
+        params.add("oauth_token=" + OauthToken);
+        params.add("oauth_signature=" + sign(HTTP_METHOD, APP_URL, params.toArray(template)));
+
+        return APP_URL + "?" + paramify(params.toArray(template));
+    }
+
+
+
+
+
     public String buildFoodSearchbarcodeGetUrl(String Barcode) throws Exception {
         List<String> params = new ArrayList<String>(Arrays.asList(generateOauthParams()));
         String[] template = new String[1];
