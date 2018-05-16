@@ -206,6 +206,33 @@ public class RequestBuilder {
         return APP_URL + "?" + paramify(params.toArray(template));
     }
 
+
+    /**
+     * Returns the rest url which will be sent to fatsecret platform server for searching food items based on search terms and page number
+     *
+     * @param query			search terms for querying food items
+     * @param pageNumber	page Number to search the food items
+     * @param regionOptional	search food with region
+     * @param languageOptionl	search food with language
+     * @return				rest url which will be sent to fatsecret platform server for searching food items
+     * @throws Exception	if sign throws exception
+     */
+    public String buildFoodsSearchWithCommercialClientsUrl(String query, int pageNumber,String regionOptional,String languageOptionl) throws Exception {
+        List<String> params = new ArrayList<String>(Arrays.asList(generateOauthParams()));
+        String[] template = new String[1];
+        params.add("method=foods.search");
+        if(regionOptional!=null && !regionOptional.equalsIgnoreCase(""))
+        params.add("region="+regionOptional);
+        if(languageOptionl!=null && !languageOptionl.equalsIgnoreCase(""))
+        params.add("language="+languageOptionl);
+        params.add("max_results=50");
+        params.add("page_number=" + pageNumber);
+        params.add("search_expression=" + encode(query));
+        params.add("oauth_signature=" + sign(HTTP_METHOD, APP_URL, params.toArray(template)));
+
+        return APP_URL + "?" + paramify(params.toArray(template));
+    }
+
     /**
      * Returns the rest url which will be sent to fatsecret platform server for searching unique food item
      *
@@ -291,6 +318,11 @@ public class RequestBuilder {
 
         return APP_URL + "?" + paramify(params.toArray(template));
     }
+
+
+
+
+
 
     /**
      * Returns the rest url which will be sent to fatsecret platform server for searching unique recipe
