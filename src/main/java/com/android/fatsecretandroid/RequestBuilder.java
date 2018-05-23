@@ -262,6 +262,7 @@ public class RequestBuilder {
         List<String> params = new ArrayList<String>(Arrays.asList(generateOauthParams()));
         String[] template = new String[1];
         params.add("method=profile.get_auth");
+
         params.add("user_id=" + userID);
         params.add("oauth_signature=" + sign(HTTP_METHOD, APP_URL, params.toArray(template)));
 
@@ -286,13 +287,24 @@ public class RequestBuilder {
     }
 
 
+    /**
+     * Returns the rest url which will be sent to fatsecret platform server for searching food items based on search terms and page number
+     *
+     * @param regionOptional	search food with region
+     * @param languageOptionl	search food with language
+     * @return				rest url which will be sent to fatsecret platform server for searching food items
+     * @throws Exception	if sign throws exception
+     */
 
 
-
-    public String buildFoodSearchbarcodeGetUrl(String Barcode) throws Exception {
+    public String buildFoodSearchbarcodeGetUrl(String Barcode,String regionOptional,String languageOptionl) throws Exception {
         List<String> params = new ArrayList<String>(Arrays.asList(generateOauthParams()));
         String[] template = new String[1];
         params.add("method=food.find_id_for_barcode");
+        if(regionOptional!=null && !regionOptional.equalsIgnoreCase(""))
+            params.add("region="+regionOptional);
+        if(languageOptionl!=null && !languageOptionl.equalsIgnoreCase(""))
+            params.add("language="+languageOptionl);
         params.add("barcode=" + Barcode);
         params.add("oauth_signature=" + sign(HTTP_METHOD, APP_URL, params.toArray(template)));
 
